@@ -1,0 +1,42 @@
+spora
+
+    1. Mail
+Рекомендуемое ПО:
+smtp-enum-users (smtp-enum-users -M VRFY -U сюда_подставить_словарь.txt -D название домена -t 10.0.10.35
+Рекомендуемый словарь:
+    • https://github.com/danielmiessler/SecLists/blob/master/Usernames/top-usernames-shortlist.txt И
+    • https://github.com/danielmiessler/SecLists/blob/master/Usernames/cirt-default-usernames.txt
+    2. Разведка
+Утилиты: 
+NMAP (nmap -p- 10.0.10.35; nmap -T4 -A -v это Intense scan; nmap -sS -sU -T4 -A -v это Intense scan plus UDP)
+Dirb (dirb http://example.com; dirb http://www.example.com -w wordlist.txt ) - онлайн-сканер каталогов, который ищет на веб-серверах скрытые файлы, директории и страницы
+Curl POST -X http://example.com запрос к сайту. Он дает ответ на тупой запрос , в нем бывает ключ иногда
+Также есть утилита dig с помощью которой можно работать с DNS. Главный признак DNS- висит че то такое на 53 порту. 
+Скорее всего все будет хранится в TXT записи. Чтобы ее получить надо сделать dig txt _acme-challenge.domain.ru например.
+
+    3. Криптография
+https://cyberchef.org/#input=NDEyNDMxMTE 
+
+    4. База данных эксплойтов
+https://www.exploit-db.com/ 
+https://www.cve.org/About/Metrics 
+
+    5. Брутфорс FTP 
+Рекомендуется запускать утилиту под Рутом: Sudo su
+Hydra - программное обеспечение с открытым исходным кодом для перебора паролей в реальном времени от различных онлайн-сервисов, веб-приложений, FTP, SSH, telnet, HTTP, HTTPS, RDP, SMTP и других протоколов.
+Hydra (hydra -t 4 -l ftp_user -P /usr/share/wordlists/rockyou.txt -vV 10.0.10.35 -s 21 ftp)
+rockyou.txt идет в наборе с утилитой, лежит по указанному адресу, может быть в архиве (необходимо разархивировать словарь).
+    6. Метасплойт
+Метасплойт это штука для пентаста вебухи.  
+Есть своя база эксплойтов. Что надо делать с помощью этого — запускаем msfconsole (ИЗ ПОД РУТА! НЕ ЗАБЫВАЕМ!) ну и потом уже юзаем. Когда мы нашли какой то сервис над которым решили проводить действия с помощью метасплойта сначала нужно найти эксплойт. Эксплойт это программа которая ломает удаленную службу, открывая шелл на серв. 
+Используем команду search и находим эксплойт по кодовым словам. 
+Найденные эксплойты выводятся под цифрами и дальше делаем use 1 где 1 — номер экплойта на экране.
+Дальше как попадаем в шелл — это обычная командная строка. 
+
+    7. Брутфорс веб-приложений
+Burp Suite - комплексный инструмент для тестирования безопасности веб-приложений, который позволяет перехватывать и анализировать HTTP-запросы, сканировать уязвимости, автоматизировать атаки.
+Его нужно юзать когда мы знаем что можно проэксплуатировать XSS, SQL\NOSQL injection. Главное понять что это ОНО.
+Пейлоады для бурпа: https://github.com/danielmiessler/SecLists/blob/master/Passwords/500-worst-passwords.txt 
+Пейлоады для SQL/NO SQL инъекций и SSTI (Server Side Template Injection)
+https://github.com/swisskyrepo/PayloadsAllTheThings?ysclid=m5w8j72yie988334060 
+
